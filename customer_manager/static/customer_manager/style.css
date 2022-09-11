@@ -1,0 +1,15 @@
+input{
+    display: block;
+    margin-bottom: 5px;
+}
+.hyperlink-format{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.customer-view-output{
+    display: block;
+    margin-bottom: 5px;
+}
+.output-label{
+    font-weight: bold;
+}

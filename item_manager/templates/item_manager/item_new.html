@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'item_manager/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h2>New item</h2>
+    <form action="{% url 'item_new' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <label>
+                Item Name
+                <input type="text" name="item_name" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Item Description
+                <input type="text" name="item_description" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Item Internal Cost
+                <!-- <input type="number" name="item_cost_internal" id="set-two-decimals" step=.01 onchange="twoDecimalSetter()"> -->
+                <input type="text" name="item_cost_internal" />
+            </label>
+        </div>
+        <button type="submit">Create item</button>
+    </form>
+    {{ message }}
+    <script>
+        function twoDecimalSetter(){
+        twoDecimalCost=document.getElementById("set-two-decimals").value;
+        twoDecimalCost=parseFloat(twoDecimalCost).toFixed(2);
+        document.getElementById("set-two-decimals").value=twoDecimalCost;
+        }
+    </script>
+</body>
+</html>
