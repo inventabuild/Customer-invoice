@@ -7,6 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>List items</h1>
+    <h1>List all items</h1>
+    <table>
+        <thead>
+            <th>Item </th>
+            <th>id</th>
+        </thead>
+        {% for item in list_all %}
+        <tr>
+            <td><a href="{% url 'item_view' item.id %}">{{item.name}}</a></td>
+            <td><a href="{% url 'item_view' item.id %}">{{item.id}}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

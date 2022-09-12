@@ -1,3 +1,4 @@
+from ast import mod
 from importlib.resources import path
 from django.shortcuts import render
 from . import models
@@ -22,10 +23,16 @@ def item_new(request):
     }
     return render(request, 'item_manager/item_new.html', data)
 
-def item_view(request):
-
-    return render(request, 'item_manager/item_view.html')
+def item_view(request, id):
+    item_single=models.Item.objects.get(id=id)
+    data={
+        'item_single': item_single
+    }
+    return render(request, 'item_manager/item_view.html', data)
 
 def item_list(request):
-
-    return render(request, 'item_manager/item_list.html')
+    list_all=models.Item.objects.all().order_by('name')
+    data={
+        'list_all': list_all
+    }
+    return render(request, 'item_manager/item_list.html', data)
