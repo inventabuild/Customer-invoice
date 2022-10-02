@@ -1,0 +1,196 @@
+.header-address{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.doc-type{
+    text-align: right;
+    font-weight: bold;
+}
+.bill-to{
+   margin-left: 115px; 
+}
+.bill-to-date-invoice-header-row{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-top: 25px;
+}
+.customer-mailing-address{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    word-wrap: normal;
+}
+.text-area-customer-mailing-address{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    height: 5em;
+    width: 14em;
+    border-color: black;
+    resize: none;
+    position: relative;
+    top: -22px;
+}
+.select-company-date-invoice-num-input-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.invoice-number-header{
+    margin-right: 60px;
+}
+.invoice-date-header{
+    margin-right: 100px;
+}
+.customer-select{
+    z-index: 9999;
+}
+.line-items-table{
+    border-collapse: collapse;
+}
+.po-num-input-1{
+    margin-right: -5px;
+}
+.item-num-select-1{
+    margin-right: -5px;
+    height: 21px;
+    /* appearance: none; */
+}
+.item-name-select-1{
+    margin-right: -5px;
+    height: 21px;
+    /* appearance: none; */
+}
+.qty-ea-input-1{
+    margin-right: -5px;
+}
+.price-ea-input-1{
+    margin-right: -5px;
+}
+.amount-dollar-input-1{
+    margin-right: -5px;
+}
+.po-num-input-2{
+    margin-right: -5px;   
+}
+.item-num-select-2{
+    margin-right: -5px;
+    height: 21px;
+   
+    /* appearance: none; */
+}
+.item-name-select-2{
+    margin-right: -5px;
+    height: 21px;
+    
+    /* appearance: none; */
+}
+.qty-ea-input-2{
+    margin-right: -5px;
+   
+}
+.price-ea-input-2{
+    margin-right: -5px;
+}
+.amount-dollar-input-2{
+
+}
+.po-num-input-3{
+    margin-right: -5px;
+
+}
+.item-num-select-3{
+    margin-right: -5px;
+    height: 21px;
+   
+    /* appearance: none; */
+}
+.item-name-select-3{
+    margin-right: -5px;
+    height: 21px;
+    
+    /* appearance: none; */
+}
+.qty-ea-input-3{
+    margin-right: -5px;
+    
+}
+.price-ea-input-3{
+    margin-right: -5px;
+    
+}
+.amount-dollar-input-3{
+
+}
+.po-num-input-4{
+    margin-right: -5px;
+    
+}
+.item-num-select-4{
+    margin-right: -5px;
+    height: 21px;
+   
+    /* appearance: none; */
+}
+.item-name-select-4{
+    margin-right: -5px;
+    height: 21px;
+    /* -webkit-appearance: none; */
+    /* appearance: none;
+    border: none; */
+}
+.qty-ea-input-4{
+    margin-right: -5px;
+   
+}
+.price-ea-input-4{
+    margin-right: -5px;
+   
+}
+.amount-dollar-input-4{
+   
+}
+.po-num-input-5{
+    margin-right: -5px;
+ 
+}
+.item-num-select-5{
+    margin-right: -5px;
+    height: 21px;
+ 
+    /* appearance: none; */
+}
+.item-name-select-5{
+    margin-right: -5px;
+    height: 21px;
+
+    /* appearance: none; */
+}
+.qty-ea-input-5{
+    margin-right: -5px;
+
+}
+.price-ea-input-5{
+    margin-right: -5px;
+}
+.amount-dollar-input-5{
+   
+}
+td{
+    padding: 0px;
+}
+.save-form-button-paragraph{
+    display: flex;
+    justify-content: center;
+    /* add to @media print */
+    /* position: relative;
+    margin-right: 0px; */
+}
+.save-form-button{
+    background-color: lightgreen;
+}
+.customer-id{
+    /* display: none;
+    visibility: hidden; */
+}

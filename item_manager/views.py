@@ -1,4 +1,3 @@
-from ast import mod
 from importlib.resources import path
 from django.shortcuts import render
 from . import models
@@ -8,6 +7,7 @@ def item_new(request):
     if request.method == "POST":
         try:
             new_item = models.Item(
+                number=request.POST.get('item_number'),
                 name=request.POST.get('item_name'),
                 description=request.POST.get('item_description'),
                 item_cost_internal=request.POST.get('item_cost_internal')

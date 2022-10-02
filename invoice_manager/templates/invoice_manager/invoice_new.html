@@ -1,0 +1,516 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'invoice_manager/style.css' %}?v=20220925742">
+    <title>Invoice Document</title>
+</head>
+<body>
+    <form action="{% url 'invoice_new' %}" method="POST" onsubmit="validate_form()">
+        {% csrf_token %}
+        <div class="doc-type">
+            INVOICE
+        </div>
+        <div class="header-address">
+            <span>We Build Your Website</span>
+            <span>123 Builders Way</span>
+            <span>Silicon Valley CA 56789</span>
+            <span>Tel: 123-456-7890</span>
+        </div>
+        <div class="bill-to-date-invoice-header-row">
+            <span class="bill-to">Bill to:</span>
+            <span>
+                <span id="invoice-date-header" class="invoice-date-header">Date</span>
+                <span class="invoice-number-header">Invoice #</span>
+            </span>
+        </div>
+        <div class="select-company-date-invoice-num-input-row">
+            <select name="customer-select" id="customer-select" class="customer-select" onchange="customer_selected(this)">
+                <option value="-1">
+                    --Select One--
+                </option>
+                {% for customer in customer_all %}
+                    <option value="{{ customer.id }}">
+                        {{ customer.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <div class="date-invoice-num-input-row">
+                <input name="invoice-date" type="date" id="invoice-date-input" class="invoice-date-input">
+                <input name="invoice-number" type="text" id="invoice-num-input" class ="invoice-num-input" placeholder="Enter the invoice number">
+            </div>
+        </div>
+        </div>
+        <textarea id="text-area-customer-mailing-address" class="text-area-customer-mailing-address" readonly>
+
+            --Select a company--
+        </textarea>
+        <table id="line-items-table" class="line-items-table">
+            <thead>
+                <th>PO #</th>
+                <th>Item #</th>
+                <th>Item Name</th>
+                <th>Price Ea</th>
+                <th>Qty Ea</th>
+                <th>Amount ($)</th>
+            </thead>
+            <tr>
+                <td><input type="text" name="po-num-input-1" id="po-num-input-1" class="po-num-input-1"></td>
+                <td><select name="item-num-select-1" id="item-num-select-1" class="item-num-select-1" onchange="item_num_selected(this, '1')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.number }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><select name="item-name-select-1" id="item-name-select-1" class="item-name-select-1" onchange="item_name_selected(this, '1')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="price-ea-input-1" id="price-ea-input-1" class="price-ea-input-1" onclick="price_ea_field_clicked('1')" value="--Read only--" readonly></td>
+                <!-- <td><select name="price-ea-input-1" id="price-ea-input-1" class="price-ea-input-1" onclick="price_ea_field_clicked('1')" value="Read only" readonly>
+                    <option value="{{ '-1' }}">
+                        --Read Only--
+                    </option>
+                    {% for customer_pricing in customer_pricing_all %}
+                        <option value="{{ customer_pricing.id }}">
+                            {{ customer_pricing.customer_pricing }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td> -->
+                <td><input type="number" min="0" max="1000000000000" name="qty-ea-input-1" id="qty-ea-input-1" class="qty-ea-input-1" step="1" onchange="qty_ea_validation(this, '1')"></td>
+                <td><input type="text" name="amount-dollar-input-1" id="amount-dollar-input-1" class="amount-dollar-input-1" onclick="amount_dollar_field_clicked()" onchange="sum_amount(this)" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="po-num-input-2" id="po-num-input-2" class="po-num-input-2"></td>
+                <td><select name="item-num-select-2" id="item-num-select-2" class="item-num-select-2" onchange="item_num_selected(this, '2')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.number }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><select name="item-name-select-2" id="item-name-select-2" class="item-name-select-2" onchange="item_name_selected(this, '2')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="price-ea-input-2" id="price-ea-input-2" class="price-ea-input-2" onclick="price_ea_field_clicked('2')" value="--Read only--" readonly></td>
+                <!-- <td><select name="price-ea-input-2" id="price-ea-input-2" class="price-ea-input-2" onclick="price_ea_field_clicked('2')" value="Read only" readonly>
+                    <option value="{{ '-1' }}">
+                        --Read Only--
+                    </option>
+                    {% for customer_pricing in customer_pricing_all %}
+                        <option value="{{ customer_pricing.id }}">
+                            {{ customer_pricing.customer_pricing }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td> -->
+                <td><input type="number" min="0" max="1000000000000" name="qty-ea-input-2" id="qty-ea-input-2" class="qty-ea-input-2" step="1" onchange="qty_ea_validation(this, '2')"></td>
+                <td><input type="text" name="amount-dollar-input-2" id="amount-dollar-input-2" class="amount-dollar-input-2" onclick="amount_dollar_field_clicked()" onchange="sum_amount(this)" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="po-num-input-3" id="po-num-input-3" class="po-num-input-3"></td>
+                <td><select name="item-num-select-3" id="item-num-select-3" class="item-num-select-3" onchange="item_num_selected(this, '3')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.number }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><select name="item-name-select-3" id="item-name-select-3" class="item-name-select-3" onchange="item_name_selected(this, '3')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="price-ea-input-3" id="price-ea-input-3" class="price-ea-input-3" onclick="price_ea_field_clicked('3')" value="--Read only--" readonly></td>
+                <!-- <td><select name="price-ea-input-3" id="price-ea-input-3" class="price-ea-input-3" onclick="price_ea_field_clicked('3')" value="Read only" readonly>
+                    <option value="{{ '-1' }}">
+                        --Read Only--
+                    </option>
+                    {% for customer_pricing in customer_pricing_all %}
+                        <option value="{{ customer_pricing.id }}">
+                            {{ customer_pricing.customer_pricing }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td> -->
+                <td><input type="number" min="0" max="1000000000000" name="qty-ea-input-3" id="qty-ea-input-3" class="qty-ea-input-3" step="1" onchange="qty_ea_validation(this, '3')"></td>
+                <td><input type="text" name="amount-dollar-input-3" id="amount-dollar-input-3" class="amount-dollar-input-3" onclick="amount_dollar_field_clicked()" onchange="sum_amount(this)" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="po-num-input-4" id="po-num-input-4" class="po-num-input-4"></td>
+                <td><select name="item-num-select-4" id="item-num-select-4" class="item-num-select-4" onchange="item_num_selected(this, '4')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.number }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><select name="item-name-select-4" id="item-name-select-4" class="item-name-select-4" onchange="item_name_selected(this, '4')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="price-ea-input-4" id="price-ea-input-4" class="price-ea-input-4" onclick="price_ea_field_clicked('4')" value="--Read only--" readonly></td>
+                <!-- <td><select name="price-ea-input-4" id="price-ea-input-4" class="price-ea-input-4" onclick="price_ea_field_clicked('4')" value="Read only" readonly>
+                    <option value="{{ '-1' }}">
+                        --Read Only--
+                    </option>
+                    {% for customer_pricing in customer_pricing_all %}
+                        <option value="{{ customer_pricing.id }}">
+                            {{ customer_pricing.customer_pricing }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td> -->
+                <td><input type="number" min="0" max="1000000000000" name="qty-ea-input-4" id="qty-ea-input-4" class="qty-ea-input-4" step="1" onchange="qty_ea_validation(this, '4')"></td>
+                <td><input type="text" name="amount-dollar-input-4" id="amount-dollar-input-4" class="amount-dollar-input-4" onclick="amount_dollar_field_clicked()" onchange="sum_amount(this)" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="po-num-input-5" id="po-num-input-5" class="po-num-input-5"></td>
+                <td><select name="item-num-select-5" id="item-num-select-5" class="item-num-select-5" onchange="item_num_selected(this, '5')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.number }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><select name="item-name-select-5" id="item-name-select-5" class="item-name-select-5" onchange="item_name_selected(this, '5')">
+                    <option value="{{ '-1' }}">
+                        --Select One--
+                    </option>
+                    {% for item in item_all %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="price-ea-input-5" id="price-ea-input-5" class="price-ea-input-5" onclick="price_ea_field_clicked('5')" value="--Read only-" readonly></td>
+                <!-- <td><select name="price-ea-input-5" id="price-ea-input-5" class="price-ea-input-5" onclick="price_ea_field_clicked('5')" value="Read only" readonly>
+                    <option value="{{ '-1' }}">
+                        --Read Only--
+                    </option>
+                    {% for customer_pricing in customer_pricing_all %}
+                        <option value="{{ customer_pricing.id }}">
+                            {{ customer_pricing.customer_pricing }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td> -->
+                <td><input type="number" min="0" max="1000000000000" name="qty-ea-input-5" id="qty-ea-input-5" class="qty-ea-input-5" step="1" onchange="qty_ea_validation(this, '5')"></td>
+                <td><input type="text" name="amount-dollar-input-5" id="amount-dollar-input-5" class="amount-dollar-input-5" onclick="amount_dollar_field_clicked()" onchange="sum_amount(this)" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td class="place-holder-cell-6"></td>
+                <td class="place-holder-cell-6"></td>
+                <td class="place-holder-cell-6"></td>
+                <td class="place-holder-cell-6"></td>
+                <td class="sales-amount-label">Sales Amount</td>
+                <td><input type="text" name="sales-amount-input" id="sales-amount-input" step=".01" class="sales-amount-input" onclick="sales_amount_field_clicked()" value="--Read only--" readonly></td>
+            </tr>
+            <tr>
+                <td class="place-holder-cell-7"></td>
+                <td class="place-holder-cell-7"></td>
+                <td class="place-holder-cell-7"></td>
+                <td class="place-holder-cell-7"></td>
+                <td class="freight-amount-label">Freight Amount</td>
+                <td><input type="text" name="freight-amount-input" id="freight-amount-input" class="freight-amount-input" onchange="freight_amount()"></td>
+            </tr>
+            <tr>
+                <td class="place-holder-cell-8"></td>
+                <td class="place-holder-cell-8"></td>
+                <td class="place-holder-cell-8"></td>
+                <td class="place-holder-cell-8"></td>
+                <td class="total-due-label">Total Due</td>
+                <td><input type="text" name="invoice-total" name="total-due-input" id="total-due" class="total-due-input" step=".01" onclick="total_due_field_clicked()" value="--Read only--" readonly></td>
+            </tr>
+        </table>
+        <p class="save-form-button-paragraph">
+            <button type="submit" id="save-button" class="save-form-button">Save invoice</button>
+        </p>
+        <div>
+        </div>
+        <div>{{ message }}</div>
+    </form>
+
+    <script type="text/javascript">
+        js_json_customer_all = JSON.parse('{{ json_customer_all | safe }}')
+        js_json_customer_pricing_all = JSON.parse('{{ json_customer_pricing_all | safe }}')
+        js_json_item_all = JSON.parse('{{ json_item_all | safe }}')
+        var customerSelectedPk = "-1"
+        // const save_button = document.getElementById("save-button")
+        // save_button.addEventListener("click", validate_form)
+        function validate_form(){
+            if(document.getElementById("invoice-num-input").value == ""){
+                alert("Enter the Invoice #")
+                event.preventDefault()
+                return
+            }
+            else if(document.getElementById("customer-select").value == "-1"){
+                alert("Select a company")
+                event.preventDefault()
+                return
+            }
+            for(i=1; i<=5; i++){
+                if((document.getElementById("po-num-input-" + i).value != "" || document.getElementById("qty-ea-input-" + i).value != "") && document.getElementById("item-num-select-" + i).value == "-1"){
+                    alert("Enter the Item # or Item Name for row " + i + " or clear the row of data")
+                    event.preventDefault()
+                    return
+                }
+            }
+            var ctr = 0
+            for(i=1; i<=5; i++){
+                if(document.getElementById("po-num-input-" + i).value == "" && document.getElementById("item-num-select-" + i).value == "-1" && document.getElementById("qty-ea-input-" + i).value == ""){
+                    ctr = ctr + 1
+                }
+            }
+            if(ctr == 5){
+                alert("Fill out a row before saving the invoice")
+                event.preventDefault()
+                return
+            }
+            for(i=1; i<=5; i++){
+                if(document.getElementById("item-num-select-" + i).value != "-1"){
+                    if(document.getElementById("po-num-input-" + i).value == ""){
+                        alert("Enter the PO # for row " + i)
+                        event.preventDefault()
+                        return
+                    }
+                    else if(document.getElementById("qty-ea-input-" + i).value == ""){
+                        alert("Enter the Qty Ea for row " + i)
+                        event.preventDefault()
+                        return
+                    }
+                }
+            }
+            if (document.getElementById("freight-amount-input").value == ""){
+                document.getElementById("freight-amount-input").value = "0.00"
+            }
+
+        }
+        function customer_selected(customerSelectObject){
+            var mailingAddressComplete = ""
+            if (customerSelectObject == "-1"){
+                    mailingAddressComplete = "\n" + "            --Select a company--"
+            }
+            else {
+                for (i=0; i<js_json_customer_all.length; i++){
+                    if (js_json_customer_all[i].pk == customerSelectObject.value){
+                        mailingAddressComplete = "\n" + js_json_customer_all[i].fields.name + "\n"
+                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.address + "\n"
+                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.city + " "
+                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.state + " "
+                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.zip_code  
+                        customerSelectedPk=(js_json_customer_all[i].pk)
+                    }
+                }
+            }
+            document.getElementById("text-area-customer-mailing-address").innerHTML = mailingAddressComplete
+            for (i=1; i<=5; i++){
+                document.getElementById("item-num-select-" + i).value = "-1"
+                document.getElementById("item-name-select-" + i).value = "-1"
+                document.getElementById("qty-ea-input-" + i).value = ""
+                document.getElementById("price-ea-input-" + i).value = "--Read only--"
+                document.getElementById("amount-dollar-input-" + i).value = "--Read only--"
+            }
+            sum_amount()
+        }
+        function item_num_selected(itemNumSelectObject, rowSelected){
+            if (document.getElementById("customer-select").value == "-1"){
+                itemNumSelectObject.value = "-1"
+                alert("Select the company first")
+                return
+            }
+            if (document.getElementById(itemNumSelectObject.name).value == "-1"){
+                document.getElementById("item-name-select-" + rowSelected).value = "-1"
+                document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                sum_amount()
+            }
+            else{
+                for (i=0; i<js_json_customer_pricing_all.length; i++){
+                    if ((js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk) && (js_json_customer_pricing_all[i].fields.item_id == itemNumSelectObject.value)) {
+                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
+                        document.getElementById("item-name-select-" + rowSelected).value = itemNumSelectObject.value
+                    }
+                    else {
+                        itemNumSelectObject.value = ""
+                        document.getElementById("item-name-select-" + rowSelected).value = "-1"
+                        document.getElementById("item-num-select-" + rowSelected).value = "-1"
+                        document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                        document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                        document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                        alert("Please create customer pricing for this item")
+                    }
+                }
+            }
+        }
+        function item_name_selected(itemNameSelectObject, rowSelected){
+            if (document.getElementById("customer-select").value == "-1"){
+                itemNameSelectObject.value = "-1"
+                alert("Select the company first")
+                return
+            }
+            if (document.getElementById(itemNameSelectObject.name).value == "-1"){
+                document.getElementById("item-num-select-" + rowSelected).value = "-1"
+                document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                sum_amount()
+            }
+            else{
+                for (i=0; i<js_json_customer_pricing_all.length; i++){
+                    if (js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk && js_json_customer_pricing_all[i].fields.item_id == itemNameSelectObject.value){
+                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
+                        document.getElementById("item-num-select-" + rowSelected).value = itemNameSelectObject.value
+                    }
+                    else {
+                        itemNameSelectObject.value = ""
+                        document.getElementById("item-name-select-" + rowSelected).value = "-1"
+                        document.getElementById("item-num-select-" + rowSelected).value = "-1"
+                        document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                        document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                        document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                        alert("Please create customer pricing for this item")
+                    }
+                }
+            }
+        }
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+        var today = year + "-" + month + "-" + day;       
+        document.getElementById("invoice-date-input").value = today;
+        function sum_amount(){
+            totSalesAmount = Number(0.00).toFixed(2)
+            for(i = 1; i<=5; i++){
+                if (!isNaN(Number(document.getElementById("amount-dollar-input-" + i).value))){
+                totSalesAmount = Number(totSalesAmount) + Number(document.getElementById("amount-dollar-input-" + i).value)
+            }
+            }
+            document.getElementById("sales-amount-input").value = Number(totSalesAmount).toFixed(2)
+            if(document.getElementById("sales-amount-input").value == "0.00"){
+                document.getElementById("sales-amount-input").value = "--Read only--"
+            }
+            total_due()
+        }
+        function qty_ea_validation(amountQtyEaInput, rowSelected){
+            if (document.getElementById("price-ea-input-" + rowSelected).value == "-1") {
+                amountQtyEaInput.value = ""
+                alert("Select an Item # or Item Name before entering Qty Ea")
+            }
+            else if(amountQtyEaInput.value - Math.floor(amountQtyEaInput.value) !== 0){
+                amountQtyEaInput.value = ""
+                alert("Only whole numbers allowed in Qty Ea field")    
+            }
+            else if(amountQtyEaInput.value == 0){
+                amountQtyEaInput.value = ""
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "Read only"
+                sum_amount()
+            }
+            else{
+                amountQtyEaInput.value = Number(amountQtyEaInput.value).toFixed(0)
+                document.getElementById("amount-dollar-input-" + rowSelected).value = Number(amountQtyEaInput.value * document.getElementById("price-ea-input-" + rowSelected).value).toFixed(2)
+                // const select = document.getElementById("price-ea-input-" + rowSelected)
+                // document.getElementById("amount-dollar-input-" + rowSelected).value = Number(amountQtyEaInput.value * select.options[select.selectedIndex].text).toFixed(2)
+                sum_amount()
+            }
+        }
+        function price_ea_field_clicked(rowSelected){
+            if (document.getElementById("item-num-select-" + rowSelected).value == ""){
+                alert("Select an Item # or Item Name to get pricing.")
+            }
+            else{
+                alert("This field is readonly")
+            }
+        }
+        function sales_amount_field_clicked(){
+            alert("This field is readonly")
+        }
+        function total_due_field_clicked(){
+            alert("This field is readonly")
+        }
+        function amount_dollar_field_clicked(){
+            alert("This field is readonly")
+        }
+        function freight_amount(){
+            if (!isNaN(Number(document.getElementById("freight-amount-input").value))){
+                document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2)
+            }
+            total_due()
+        }
+        function total_due(){
+            var totalDue = 0.00
+            if (!isNaN(Number(document.getElementById("sales-amount-input").value))){
+                totalDue = Number(document.getElementById("sales-amount-input").value)
+                document.getElementById("total-due").value = Number(totalDue).toFixed(2)
+            }
+            else{
+                document.getElementById("total-due").value = "--Read only--"
+            }
+            if (!isNaN(Number(document.getElementById("freight-amount-input").value)) && Number(document.getElementById("freight-amount-input").value)!==0){
+                    document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2)
+                    totalDue = totalDue + Number(document.getElementById("freight-amount-input").value)
+                    document.getElementById("total-due").value = totalDue.toFixed(2)
+            }
+        }
+    </script>
+</body>
+
+</html>

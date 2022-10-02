@@ -14,21 +14,26 @@
         {% csrf_token %}
         <div>
             <label>
+                Item Number
+                <input type="text" name="item_number" required />
+            </label>
+        </div>
+        <div>
+            <label>
                 Item Name
-                <input type="text" name="item_name" />
+                <input type="text" name="item_name" required />
             </label>
         </div>
         <div>
             <label>
                 Item Description
-                <input type="text" name="item_description" />
+                <input type="text" name="item_description" required />
             </label>
         </div>
         <div>
             <label>
                 Item Internal Cost
-                <!-- <input type="number" name="item_cost_internal" id="set-two-decimals" step=.01 onchange="twoDecimalSetter()"> -->
-                <input type="text" name="item_cost_internal" />
+                <input type="number" name="item_cost_internal" id="set-two-decimals" step=.01 onchange="twoDecimalSetter()">
             </label>
         </div>
         <button type="submit">Create item</button>

@@ -1,12 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'customer_pricing_manager/style.css' %}">
     <title>Document</title>
 </head>
 <body>
-    <h1>Customer_Pricing_Manager_New</h1>
+    <h1>Customer Pricing</h1>
+    <form action="{% url 'customer_pricing_new' %}" method="POST">
+        {% csrf_token %}
+        <div class="customer-pricing-div">
+            <label>
+             Customer:
+                <div>
+                <select name="customer_id">
+                {% for customer in customers_all %}
+                    <option option value="{{ customer.id }}">
+                        {{ customer.name }}
+                    </option>
+                {% endfor %}
+                </select>
+            </div>
+            </label>
+        </div>
+        <div class="customer-pricing-div">
+            <label>
+                Item:
+                <div>
+                <select name="item_id">
+                {% for item in items_all %}
+                    <option option value="{{ item.id }}">
+                        {{ item.name }}
+                    </option>
+                {% endfor %}
+                </select>
+                </div>
+            </label>
+        </div>
+        <div>
+            <label>
+                Customer price
+                <input type="number" name="customer_pricing" id="set-two-decimals" step=.01 onchange="twoDecimalSetter()" required>
+            </label>
+        </div>
+        <button type="submit">Save pricing</button>
+    </form>
+    {{ message }}
+    <script>
+        function twoDecimalSetter(){
+            twoDecimalCost=document.getElementById("set-two-decimals").value;
+            twoDecimalCost=parseFloat(twoDecimalCost).toFixed(2);
+            document.getElementById("set-two-decimals").value=twoDecimalCost;
+        }
+    </script>
 </body>
 </html>
