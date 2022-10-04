@@ -13,3 +13,6 @@ input{
 .output-label{
     font-weight: bold;
 }
+.hyperlink-menu-item{
+    margin-right: 10px;
+}

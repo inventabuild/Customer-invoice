@@ -9,6 +9,11 @@
     <title>Invoice Document</title>
 </head>
 <body>
+    <div class="menu-hyperlink-format">
+        <a href="{% url 'index' %}" class="hyperlink-menu-item">Home</a>
+        <a href="{% url 'invoice_list' %}">Invoice list</a>
+    </div>
+    <h2 class="h2-header">Invoice Form</h2>
     <form action="{% url 'invoice_new' %}" method="POST" onsubmit="validate_form()">
         {% csrf_token %}
         <div class="doc-type">
@@ -290,8 +295,6 @@
         js_json_customer_pricing_all = JSON.parse('{{ json_customer_pricing_all | safe }}')
         js_json_item_all = JSON.parse('{{ json_item_all | safe }}')
         var customerSelectedPk = "-1"
-        // const save_button = document.getElementById("save-button")
-        // save_button.addEventListener("click", validate_form)
         function validate_form(){
             if(document.getElementById("invoice-num-input").value == ""){
                 alert("Enter the Invoice #")
@@ -381,20 +384,22 @@
                 sum_amount()
             }
             else{
+                var match = "N"
                 for (i=0; i<js_json_customer_pricing_all.length; i++){
                     if ((js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk) && (js_json_customer_pricing_all[i].fields.item_id == itemNumSelectObject.value)) {
                         document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
                         document.getElementById("item-name-select-" + rowSelected).value = itemNumSelectObject.value
+                        match = "Y"
+                        break;
                     }
-                    else {
-                        itemNumSelectObject.value = ""
-                        document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                        document.getElementById("item-num-select-" + rowSelected).value = "-1"
-                        document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                        document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
-                        document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                        alert("Please create customer pricing for this item")
-                    }
+                }
+                if(match == "N"){
+                    document.getElementById("item-name-select-" + rowSelected).value = "-1"
+                    document.getElementById("item-num-select-" + rowSelected).value = "-1"
+                    document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                    alert("Please create customer pricing for this item")
                 }
             }
         }
@@ -412,20 +417,22 @@
                 sum_amount()
             }
             else{
+                var match = "N"
                 for (i=0; i<js_json_customer_pricing_all.length; i++){
                     if (js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk && js_json_customer_pricing_all[i].fields.item_id == itemNameSelectObject.value){
                         document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
                         document.getElementById("item-num-select-" + rowSelected).value = itemNameSelectObject.value
+                        match = "Y"
+                        break;
                     }
-                    else {
-                        itemNameSelectObject.value = ""
-                        document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                        document.getElementById("item-num-select-" + rowSelected).value = "-1"
-                        document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                        document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
-                        document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                        alert("Please create customer pricing for this item")
-                    }
+                }
+                if(match == "N"){
+                    document.getElementById("item-name-select-" + rowSelected).value = "-1"
+                    document.getElementById("item-num-select-" + rowSelected).value = "-1"
+                    document.getElementById("qty-ea-input-" + rowSelected).value = ""
+                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
+                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
+                    alert("Please create customer pricing for this item")
                 }
             }
         }
@@ -451,7 +458,7 @@
             total_due()
         }
         function qty_ea_validation(amountQtyEaInput, rowSelected){
-            if (document.getElementById("price-ea-input-" + rowSelected).value == "-1") {
+            if (document.getElementById("price-ea-input-" + rowSelected).value == "--Read only--") {
                 amountQtyEaInput.value = ""
                 alert("Select an Item # or Item Name before entering Qty Ea")
             }
@@ -512,5 +519,4 @@
         }
     </script>
 </body>
-
 </html>

@@ -3,7 +3,8 @@ Mitchell Rabushka
 # Invoice Creator made with Django
 
 ## Link
-https://inventabuild.github.io/crypto-api/
+Branch
+https://inventabuild.github.io/Customer-invoice/
 
 ## Short Project Description
 
@@ -18,10 +19,21 @@ The website uses Django,Python, html, css and Javascript.
 4. Create a Bill of Material app that calculates item pricing based on a list of components (and their pricing) used to manufacture the items, overhead and other data entered by the user.  The BOM app will automatically updates the customer pricing database so it will have up to date information for new invoices.
 5. Make the company name header at the top of the invoice editable and allow for multiple companies to be stored and selected via a select dropdown list.
 6. Create template literal in invoice_manager/invoice_view that will count through the rows to populate them instead of listing each row separately in the html area.
+7. Add invoice_date_closed to Invoice models and tie it to the date that the invoice_paid boolean checbox is checked.  The age (by days) will be calculated from the original invoice_date to the invoice_date_closed or the age counter will remain live if the invoice is still open (invoice_paid boolean checbox is unchecked).
+8. Add the age counter (days old) to the invoice_list page and invoice_view for specific invoices.
+9. Add the ability to search for open invoices vs closed invoices.
+10. Create a search page in each app to search by number, name, etc.
+11. Verify if pricing already exists when trying to create new customer pricing.
+12. Increase padding / margin between table data.
+13. Eliminate menu hyperlinks, other styling not wanted when printing invoice.
+14. Make invoice print/save to a pdf when saving the invoice.
+15. In customer pricing new start the dropdowns w/ --Select-- and validate for incomplete selection / data input.
+16. Validate data in all "new" pages like I did in the invoice_new page.
+16. Find best way to convert new invoice to pdf file when the page is saved.
 
 ## User Stories
-User Story 1, As someone interested in investing in cryptocurrencies, I want to obtain cryptocurrency prices without requiring an account sign-in, so I don't have to take time to sign-in for quotes.
+User Story 1, As someone that creates invoices on the computer, I want an app that can simplify the process of creating invoices, so a lot of the manual processes I currently go through when creating invoices can be eliminated.
 
-User Story 2, As an investor in cryptocurrencies, I want a screen dedicated to cryptocurrency prices, so I don't get bombarded by adverstisements whenever I want to retrieve prices.
+User Story 2, As a company that creates invoices on a computer to send to customers, we want an app that stores information needed to create invoices in several databases on a coomputer, so we can easily access the information for creating invoices.
 
-User Story 3, As an investor that uses the 200 day moving average for making investment decisions about cryptocurrencies, I wanted a screen that showed the 200 day moving average of cryptocurrencies, so I can save time.
+User Story 3, As a company that needs to get paid on invoices sent to customers, we want a database of open invoices that shows the age of the invoices, so that we can notify customers to pay us when an invoice gets older than 30 days.

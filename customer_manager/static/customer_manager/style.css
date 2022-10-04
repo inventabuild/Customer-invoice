@@ -2,7 +2,7 @@ input{
     display: block;
     margin-bottom: 5px;
 }
-.hyperlink-format{
+.menu-hyperlink-format{
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -12,4 +12,7 @@ input{
 }
 .output-label{
     font-weight: bold;
+}
+.hyperlink-menu-item{
+    margin-right: 10px;
 }

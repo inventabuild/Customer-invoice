@@ -9,9 +9,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
+    <div class="menu-hyperlink-format">
+        <a href="{% url 'index' %}" class="hyperlink-menu-item">Home</a>
+        <a href="{% url 'customer_list' %}">Customer list</a>
+    </div>
+    <h2>
         New Customer Form
-    </h1>
+    </h2>
     <form action="{% url 'customer_new' %}" method="POST">
         {% csrf_token %}
         <div>

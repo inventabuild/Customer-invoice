@@ -13,6 +13,7 @@ from django.contrib import messages
 # Create your views here.
 def invoice_new(request):
     if request.method == 'POST':
+        try:
             customer_id = request.POST.get('customer-select')
             customer = customer_manager_models.Customer.objects.get(id=customer_id)
             item_id_row_1 = request.POST.get('item-num-select-1')
@@ -126,7 +127,7 @@ def invoice_new(request):
                 )
             new_invoice.save()
             message="Invoice created successfully"
-                   
+        except:
             message="There was an error saving the invoice"
     else:
         message=""
@@ -158,3 +159,5 @@ def invoice_list(request):
         'invoice_all': invoice_all
         }
     return render(request, 'invoice_manager/invoice_list.html', data)
+def invoice_options_list(request):
+    return render(request, 'invoice_manager/invoice_options_list.html')

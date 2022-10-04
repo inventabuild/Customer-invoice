@@ -9,7 +9,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Customer Pricing</h1>
+    <div class="menu-hyperlink-format">
+        <a href="{% url 'index' %}" class="hyperlink-menu-item">Home</a>
+        <a href="{% url 'customer_pricing_list' %}">Customer pricing list</a>
+    </div>
+    <h2>Customer Pricing</h2>
     <form action="{% url 'customer_pricing_new' %}" method="POST">
         {% csrf_token %}
         <div class="customer-pricing-div">
@@ -43,7 +47,7 @@
         <div>
             <label>
                 Customer price
-                <input type="number" name="customer_pricing" id="set-two-decimals" step=.01 onchange="twoDecimalSetter()" required>
+                <input type="number" name="customer_pricing" id="customer_pricing" step=.01 onchange="twoDecimalSetter()" required>
             </label>
         </div>
         <button type="submit">Save pricing</button>
@@ -51,9 +55,9 @@
     {{ message }}
     <script>
         function twoDecimalSetter(){
-            twoDecimalCost=document.getElementById("set-two-decimals").value;
-            twoDecimalCost=parseFloat(twoDecimalCost).toFixed(2);
-            document.getElementById("set-two-decimals").value=twoDecimalCost;
+            twoDecimalCost=document.getElementById("customer_pricing").value;
+            twoDecimalCost=Number(twoDecimalCost).toFixed(2);
+            document.getElementById("customer_pricing").value=twoDecimalCost;
         }
     </script>
 </body>

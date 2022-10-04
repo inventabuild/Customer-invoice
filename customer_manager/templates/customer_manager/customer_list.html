@@ -9,12 +9,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        Customer List
-    </h1>
-    <div class="hyperlink-format">
-        <a href="{% url 'customer_new' %}">Create new customer</a>
+    <div class="menu-hyperlink-format">
+        <a href="{% url 'index' %}" class="hyperlink-menu-item">Home</a>
+        <a href="{% url 'customer_new' %}">Customer new</a>
     </div>
+    <h2>
+        Customer List
+    </h2>
     <div>
         <table>
             <thead>

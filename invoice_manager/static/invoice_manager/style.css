@@ -194,3 +194,17 @@ td{
     /* display: none;
     visibility: hidden; */
 }
+.hyperlink-menu-item{
+    margin-right: 10px;
+}
+@media print{
+    .menu-hyperlink-format{
+        display: none;
+    }
+    .h2-header{
+        display: none;
+    }
+    .save-form-button-paragraph{
+        display: none;
+    }
+}

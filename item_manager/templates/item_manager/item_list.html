@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="stylesheet" href="{% static 'item_manager/css.style' %}">
+    <link rel="stylesheet" href="{% static 'item_manager/style.css' %}">
     <title>Document</title>
 </head>
 <body>
-    <h1>List all items</h1>
+    <div class="menu-hyperlink-format">
+        <a href="{% url 'index' %}" class="hyperlink-menu-item">Home</a>
+        <a href="{% url 'item_new' %}">Item new</a>
+    </div>
+    <h2>List all items</h2>
     <table>
         <thead>
             <th>Item Number</th>

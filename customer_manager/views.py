@@ -36,3 +36,5 @@ def customer_list(request):
         'customers_all': customers_all
     }
     return render(request, 'customer_manager/customer_list.html', data)
+def customer_options_list(request):
+    return render(request, 'customer_manager/customer_options_list.html')

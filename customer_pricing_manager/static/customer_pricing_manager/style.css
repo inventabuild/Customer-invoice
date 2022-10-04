@@ -19,3 +19,6 @@ input{
 td, th{
     padding-right: 8px;
 }
+.hyperlink-menu-item{
+    margin-right: 10px;
+}

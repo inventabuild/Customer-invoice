@@ -48,3 +48,5 @@ def customer_pricing_list(request):
         'customer_pricing_all': customer_pricing_all,
     }
     return render(request, 'customer_pricing_manager/customer_pricing_list.html', data)
+def customer_pricing_options_list(request):
+    return render(request, 'customer_pricing_manager/customer_pricing_options_list.html')

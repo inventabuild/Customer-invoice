@@ -36,3 +36,5 @@ def item_list(request):
         'list_all': list_all
     }
     return render(request, 'item_manager/item_list.html', data)
+def item_options_list(request):
+    return render(request, 'item_manager/item_options_list.html')
