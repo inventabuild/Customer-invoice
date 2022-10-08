@@ -30,12 +30,28 @@
     border-color: black;
     resize: none;
     position: relative;
-    top: -22px;
+    /* top: -22px; */
+    top: -63px;
+    color: rgb(0, 0, 182)
+}
+.change-company-button{
+    position: relative;
+    top: -110px;
+    left: 5px;
+    background-color: rgb(255, 196, 86);
+    opacity: 0;
+    z-index: 0;
 }
 .select-company-date-invoice-num-input-row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.customer-select-div{
+    z-index: 1;
+    margin-top: 44px;
+    margin-left: 295px;
+    opacity: 1;
 }
 .invoice-number-header{
     margin-right: 60px;
@@ -43,139 +59,160 @@
 .invoice-date-header{
     margin-right: 100px;
 }
-.customer-select{
-    z-index: 9999;
-}
 .line-items-table{
     border-collapse: collapse;
 }
+table, thead, th, tr, td{
+    top: 0px;
+    position: sticky;
+}
 .po-num-input-1{
     margin-right: -5px;
+    text-align: center; 
 }
 .item-num-select-1{
     margin-right: -5px;
-    height: 21px;
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center;   
 }
 .item-name-select-1{
     margin-right: -5px;
-    height: 21px;
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .qty-ea-input-1{
     margin-right: -5px;
+    text-align: center;
 }
 .price-ea-input-1{
     margin-right: -5px;
+    text-align: center;
+    color: rgb(0, 0, 182);
 }
 .amount-dollar-input-1{
     margin-right: -5px;
+    text-align: center;
+    color: rgb(0, 0, 182); 
 }
 .po-num-input-2{
-    margin-right: -5px;   
+    margin-right: -5px;
+    text-align: center; 
 }
 .item-num-select-2{
     margin-right: -5px;
-    height: 21px;
-   
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .item-name-select-2{
     margin-right: -5px;
-    height: 21px;
-    
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .qty-ea-input-2{
     margin-right: -5px;
-   
+    text-align: center; 
 }
 .price-ea-input-2{
     margin-right: -5px;
+    text-align: center;
+    color: rgb(0, 0, 182);
 }
 .amount-dollar-input-2{
-
+    text-align: center;
+    color: rgb(0, 0, 182);
 }
 .po-num-input-3{
     margin-right: -5px;
-
+    text-align: center; 
 }
 .item-num-select-3{
     margin-right: -5px;
-    height: 21px;
-   
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .item-name-select-3{
     margin-right: -5px;
-    height: 21px;
-    
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .qty-ea-input-3{
     margin-right: -5px;
-    
+    text-align: center; 
 }
 .price-ea-input-3{
     margin-right: -5px;
-    
+    text-align: center;
+    color: rgb(0, 0, 182);  
 }
 .amount-dollar-input-3{
-
+    text-align: center;
+    color: rgb(0, 0, 182); 
 }
 .po-num-input-4{
     margin-right: -5px;
-    
+    text-align: center; 
 }
 .item-num-select-4{
     margin-right: -5px;
-    height: 21px;
-   
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .item-name-select-4{
     margin-right: -5px;
-    height: 21px;
-    /* -webkit-appearance: none; */
-    /* appearance: none;
-    border: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .qty-ea-input-4{
     margin-right: -5px;
-   
+    text-align: center; 
 }
 .price-ea-input-4{
     margin-right: -5px;
-   
+    text-align: center;
+    color: rgb(0, 0, 182);  
 }
 .amount-dollar-input-4{
-   
+    text-align: center;
+    color: rgb(0, 0, 182);
 }
 .po-num-input-5{
     margin-right: -5px;
- 
+    text-align: center; 
 }
 .item-num-select-5{
     margin-right: -5px;
-    height: 21px;
- 
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .item-name-select-5{
     margin-right: -5px;
-    height: 21px;
-
-    /* appearance: none; */
+    height: 21.3px;
+    text-align: center; 
 }
 .qty-ea-input-5{
     margin-right: -5px;
-
+    text-align: center;
+    color: rgb(0, 0, 182); 
 }
 .price-ea-input-5{
     margin-right: -5px;
+    text-align: center;
+    color: rgb(0, 0, 182);  
 }
 .amount-dollar-input-5{
-   
+    text-align: center;
+    color: rgb(0, 0, 182);  
+}
+.sales-amount-input{
+    text-align: center; 
+    color: rgb(0, 0, 182);
+}
+.freight-amount-input{
+    text-align: center; 
+}
+.total-due-input{
+    text-align: center;
+    color: rgb(0, 0, 182);
 }
 td{
     padding: 0px;
@@ -189,14 +226,31 @@ td{
 }
 .save-form-button{
     background-color: lightgreen;
-}
-.customer-id{
-    /* display: none;
-    visibility: hidden; */
+    margin-right: 150px;
 }
 .hyperlink-menu-item{
     margin-right: 10px;
 }
+.dollar-sign{
+    position: absolute;
+    margin-left: 2px;
+    margin-top: 2px;
+    color: rgb(0, 0, 182); 
+}
+.dollar-sign-freight-amount-input{
+    position: absolute;
+    margin-left: 2px;
+    margin-top: 2px;
+    color: black;
+}
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    border: 1px solid rgb(118, 118, 118);
+    box-shadow: 0 0 0 20px white inset;
+    height: 17.2px;
+} */
 @media print{
     .menu-hyperlink-format{
         display: none;
@@ -206,5 +260,35 @@ td{
     }
     .save-form-button-paragraph{
         display: none;
+    }
+    .item-num-select-1{
+        appearance: none;
+    }
+    .item-num-select-2{
+        appearance: none;
+    }
+    .item-num-select-3{
+        appearance: none;
+    }
+    .item-num-select-4{
+        appearance: none;
+    }
+    .item-num-select-5{
+        appearance: none;
+    }
+    .item-name-select-1{
+        appearance: none;
+    }
+    .item-name-select-2{
+        appearance: none;
+    }
+    .item-name-select-3{
+        appearance: none;
+    }
+    .item-name-select-4{
+        appearance: none;
+    }
+    .item-name-select-5{
+        appearance: none;
     }
 }

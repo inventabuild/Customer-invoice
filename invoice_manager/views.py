@@ -13,19 +13,19 @@ from django.contrib import messages
 # Create your views here.
 def invoice_new(request):
     if request.method == 'POST':
-        try:
+        
             customer_id = request.POST.get('customer-select')
             customer = customer_manager_models.Customer.objects.get(id=customer_id)
             item_id_row_1 = request.POST.get('item-num-select-1')
-            if (item_id_row_1 != '-1'):
+            if (item_id_row_1 != '-1' and item_id_row_1 != '-2'):
                 item_id_row_1_object = item_manager_models.Item.objects.get(id=item_id_row_1)
                 item_num_row_1 = item_id_row_1_object.number
                 item_name_row_1 = item_id_row_1_object.name
             else:
-                item_num_row_2 = ''
-                item_name_row_2 = ''
+                item_num_row_1 = ''
+                item_name_row_1 = ''
             item_id_row_2 = request.POST.get('item-num-select-2')
-            if (item_id_row_2 != '-1'):
+            if (item_id_row_2 != '-1' and item_id_row_2 != '-2'):
                 item_id_row_2_object = item_manager_models.Item.objects.get(id=item_id_row_2)
                 item_num_row_2 = item_id_row_2_object.number
                 item_name_row_2 = item_id_row_2_object.name
@@ -33,7 +33,7 @@ def invoice_new(request):
                 item_num_row_2 = ''
                 item_name_row_2 = ''
             item_id_row_3 = request.POST.get('item-num-select-3')
-            if (item_id_row_3 != '-1'):
+            if (item_id_row_3 != '-1' and item_id_row_3 != '-2'):
                 item_id_row_3_object = item_manager_models.Item.objects.get(id=item_id_row_3)
                 item_num_row_3 = item_id_row_3_object.number
                 item_name_row_3 = item_id_row_3_object.name
@@ -41,7 +41,7 @@ def invoice_new(request):
                 item_num_row_3 = ''
                 item_name_row_3 = ''
             item_id_row_4 = request.POST.get('item-num-select-4')
-            if (item_id_row_4 != '-1'):
+            if (item_id_row_4 != '-1' and item_id_row_4 != '-2'):
                 item_id_row_4_object = item_manager_models.Item.objects.get(id=item_id_row_4)
                 item_num_row_4 = item_id_row_4_object.number
                 item_name_row_4 = item_id_row_4_object.name
@@ -49,7 +49,7 @@ def invoice_new(request):
                 item_num_row_4 = ''
                 item_name_row_4 = ''
             item_id_row_5 = request.POST.get('item-num-select-5')
-            if (item_id_row_5 != '-1'):
+            if (item_id_row_5 != '-1' and item_id_row_5 != '-2'):
                 item_id_row_5_object = item_manager_models.Item.objects.get(id=item_id_row_5)
                 item_num_row_5 = item_id_row_5_object.number
                 item_name_row_5 = item_id_row_5_object.name
@@ -127,7 +127,7 @@ def invoice_new(request):
                 )
             new_invoice.save()
             message="Invoice created successfully"
-        except:
+        
             message="There was an error saving the invoice"
     else:
         message=""

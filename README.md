@@ -27,13 +27,14 @@ The website uses Django,Python, html, css and Javascript.
 12. Increase padding / margin between table data.
 13. Eliminate menu hyperlinks, other styling not wanted when printing invoice.
 14. Make invoice print/save to a pdf when saving the invoice.
-15. In customer pricing new start the dropdowns w/ --Select-- and validate for incomplete selection / data input.
-16. Validate data in all "new" pages like I did in the invoice_new page.
+15. In customer_pricing_new start the dropdowns w/ --Select-- and validate for incomplete selection / data input.
 16. Find best way to convert new invoice to pdf file when the page is saved.
 
 ## User Stories
-User Story 1, As someone that creates invoices on the computer, I want an app that can simplify the process of creating invoices, so a lot of the manual processes I currently go through when creating invoices can be eliminated.
+User Story 1, As someone that creates invoices on the computer, I want to simplify the invoice creation process, so that I can automate invoicing.
 
-User Story 2, As a company that creates invoices on a computer to send to customers, we want an app that stores information needed to create invoices in several databases on a coomputer, so we can easily access the information for creating invoices.
+User Story 2, As a company that creates invoices on a computer to send to customers, we want to access invoice data so that we save time.
 
-User Story 3, As a company that needs to get paid on invoices sent to customers, we want a database of open invoices that shows the age of the invoices, so that we can notify customers to pay us when an invoice gets older than 30 days.
+User Story 3, As a company that needs to get paid on invoices sent to customers, we want to access payment term information, so that we can notify customers to pay us when an invoice gets older than 30 days.
+
+As a noun, verb (do something), do or be something
