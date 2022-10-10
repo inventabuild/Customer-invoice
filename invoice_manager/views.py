@@ -4,6 +4,7 @@ from importlib.resources import path
 from pyexpat import model
 from django.shortcuts import render
 from . import models
+from company_manager import models as company_manager_models
 from customer_manager import models as customer_manager_models
 from customer_pricing_manager import models as customer_pricing_manager_models
 from item_manager import models as item_manager_models
@@ -13,7 +14,7 @@ from django.contrib import messages
 # Create your views here.
 def invoice_new(request):
     if request.method == 'POST':
-        
+        try:
             customer_id = request.POST.get('customer-select')
             customer = customer_manager_models.Customer.objects.get(id=customer_id)
             item_id_row_1 = request.POST.get('item-num-select-1')
@@ -124,13 +125,15 @@ def invoice_new(request):
                 invoice_sales_amount = request.POST.get('sales-amount-input'),
                 invoice_freight_amount = request.POST.get('freight-amount-input'),
                 invoice_total_due = request.POST.get('invoice-total')
-                )
+             )
             new_invoice.save()
             message="Invoice created successfully"
-        
+        except:
             message="There was an error saving the invoice"
     else:
         message=""
+    company_all = company_manager_models.Company.objects.all().order_by('name')
+    json_company_all = serializers.serialize('json', company_manager_models.Company.objects.all().order_by('name'))
     customer_all = customer_manager_models.Customer.objects.all().order_by('name')
     json_customer_all = serializers.serialize('json', customer_manager_models.Customer.objects.all().order_by('name'))
     customer_pricing_all = customer_pricing_manager_models.Customer_Pricing.objects.all().order_by('customer_id')
@@ -138,10 +141,12 @@ def invoice_new(request):
     item_all = item_manager_models.Item.objects.all().order_by('name')
     json_item_all = serializers.serialize('json', item_manager_models.Item.objects.all().order_by('name'))
     data = {
+        'company_all': company_all,
         'customer_all': customer_all,
         'customer_pricing_all': customer_pricing_all,
         'item_all': item_all,
         'message': message,
+        'json_company_all': json_company_all,
         'json_customer_all': json_customer_all,
         'json_item_all': json_item_all,
         'json_customer_pricing_all': json_customer_pricing_all

@@ -20,7 +20,8 @@ urlpatterns = [
     path('invoice_manager/', include('invoice_manager.urls'), name='invoice_manager'),
     path('customer_manager/', include('customer_manager.urls'), name='customer_manager'),
     path('customer_pricing_manager/', include('customer_pricing_manager.urls'), name='customer_pricing_manager'),
-    path('item_manager/', include('item_manager.urls'), name = 'item_manager'),
+    path('item_manager/', include('item_manager.urls'), name='item_manager'),
+    path('company_manager/', include('company_manager.urls'), name='company_manager'),
     path('', include('home.urls'), name='home'),
     path('admin/', admin.site.urls),
 ]

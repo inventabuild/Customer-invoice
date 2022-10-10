@@ -20,11 +20,22 @@
         <div class="doc-type">
             INVOICE
         </div>
+        
         <div class="header-address">
-            <span>We Build Your Website</span>
-            <span>123 Builders Way</span>
-            <span>Silicon Valley CA 56789</span>
-            <span>Tel: 123-456-7890</span>
+            <textarea id="text-area-company-mailing-address" class="text-area-company-mailing-address" onclick="text_area_company_mailing_address()" readonly></textarea>
+            <div class="company-select-div">
+                <select name="company-select" id="company-select" class="company-select" onchange="company_selected(this)">
+                    <option value="-1">
+                        --Select Company--
+                    </option>
+                    {% for company in company_all %}
+                        <option value="{{ company.id }}">
+                            {{ company.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="button" id="change-company-button" class="change-company-button" disabled>Change company</button>
+            </div>
         </div>
         <div class="bill-to-date-invoice-header-row">
             <span class="bill-to">Bill to:</span>
@@ -48,14 +59,13 @@
             </div>
             <div class="date-invoice-num-input-row">
                 <input name="invoice-date" type="date" id="invoice-date-input" class="invoice-date-input">
-                <input name="invoice-number" type="text" id="invoice-num-input" class ="invoice-num-input" placeholder="Enter the invoice number">
+                <input name="invoice-number" type="text" id="invoice-num-input" class ="invoice-num-input">
             </div>
         </div>
         </div>
         <textarea id="text-area-customer-mailing-address" class="text-area-customer-mailing-address" onclick="text_area_customer_mailing_address()" readonly>
-                --Read only--
         </textarea>
-        <button type="button" id="change-company-button" class="change-company-button" disabled="true">Change customer</button>
+        <button type="button" id="change-customer-button" class="change-customer-button" disabled>Change customer</button>
         <table id="line-items-table" class="line-items-table">
             <thead>
                 <th>PO #</th>
@@ -255,14 +265,16 @@
         </p>
         <div>
         </div>
-        <div>{{ message }}</div>
+        <div id="message-div">{{ message }}</div>
     </form>
-
     <script type="text/javascript">
+        var js_json_company_all = JSON.parse('{{ json_company_all | safe }}')
         var js_json_customer_all = JSON.parse('{{ json_customer_all | safe }}')
         var js_json_customer_pricing_all = JSON.parse('{{ json_customer_pricing_all | safe }}')
         var js_json_item_all = JSON.parse('{{ json_item_all | safe }}')
         var customerSelectedPk = "-1"
+        document.getElementById("text-area-company-mailing-address").innerHTML = "\n" + "--Read only--";
+        document.getElementById("text-area-customer-mailing-address").innerHTML = "\n" + "                 --Read only--";
         function validate_form(){
             if(document.getElementById("invoice-num-input").value == ""){
                 alert("Enter the Invoice #")
@@ -306,9 +318,6 @@
                     }
                 }
             }
-            if (document.getElementById("freight-amount-input").value == ""){
-                document.getElementById("freight-amount-input").value = "0.00"
-            }
             for(i=1; i<=5; i++){
                 if(document.getElementById("item-num-select-" + i).value == "-1"){
                     document.getElementById("item-num-select-" + i).value = "-2"
@@ -329,61 +338,100 @@
                 document.getElementById("price-ea-input-" + i).style.color = "black";
                 document.getElementById("amount-dollar-input-" + i).style.color = "black";
             }
-            document.getElementById("dollar-sign-sales-amount-input").style.color = "black";
-            document.getElementById("dollar-sign-total-due-input").style.color = "black";
-            document.getElementById("sales-amount-input").style.color = "black";
-            document.getElementById("total-due-input").style.color = "black";
+            // document.getElementById("dollar-sign-sales-amount-input").style.color = "black";
+            // document.getElementById("dollar-sign-total-due-input").style.color = "black";
+            // document.getElementById("sales-amount-input").style.color = "black";
+            // document.getElementById("total-due-input").style.color = "black";
+            // document.getElementById("text-area-company-mailing-address").style.color = "black";
+            if (document.getElementById("freight-amount-input").value == ""){
+                alert("Enter the Freight Amount");
+                event.preventDefault()
+                // document.getElementById("freight-amount-input").value = "0.00"
+                return
+            }
             print()
-            let form = document.getElementById("invoice-form")
-            form.submit()
+            document.getElementById("change-customer-button").disabled;
+            document.getElementById("customer-select").disabled = false;
+            let form = document.getElementById("invoice-form");
+            form.submit();
+            // window.location.href = window.location.href;
+            // alert(document.getElementById("message-div").innerHTML)
         }
         function text_area_customer_mailing_address(){
             alert("Address area is read only")
         }
-        const changeCompanyButton = document.getElementById("change-company-button");
-        changeCompanyButton.addEventListener("click", showSelect);
-        function showSelect(){
-            // document.getElementById("customer-select").style.display = "block";
+        function text_area_company_mailing_address(){
+            alert("Address area is read only")
+        }
+        const changeCustomerButton = document.getElementById("change-customer-button");
+        changeCustomerButton.addEventListener("click", showSelectCustomer);
+        function showSelectCustomer(){
             document.getElementById("customer-select").value = "-1";
             document.getElementById("customer-select").disabled = false;
             document.getElementById("customer-select").style.opacity = "1";
+            document.getElementById("change-customer-button").style.zIndex = "0";
+            document.getElementById("change-customer-button").style.opacity = "0";
+            document.getElementById("change-customer-button").disabled;
+            customer_selected("-1")
+        }
+        const changeCompanyButton = document.getElementById("change-company-button");
+        changeCompanyButton.addEventListener("click", showSelectCompany);
+        function showSelectCompany(){
+            document.getElementById("company-select").value = "-1";
+            document.getElementById("company-select").disabled = false;
+            document.getElementById("company-select").style.opacity = "1";
             document.getElementById("change-company-button").style.zIndex = "0";
             document.getElementById("change-company-button").style.opacity = "0";
-            document.getElementById("change-company-button").disabled = true;
-            customer_selected("-1")
-            // document.getElementById("change-company-button").style.display = "none";
-            // document.getElementById("text-area-customer-mailing-address").style.marginTop = "0px"
-            // document.getElementById("line-items-table").style.marginTop = "0.5px"
+            document.getElementById("change-company-button").disabled;
+            company_selected("-1");
+        }
+        function company_selected(companySelectObject){
+            var companyAddressComplete = "";
+            if (companySelectObject.value == "-1" || companySelectObject == "-1"){
+                companyAddressComplete = "\n" + "--Read only--";
+            }
+            else {
+                for (i=0; i<js_json_company_all.length; i++){
+                    if (js_json_company_all[i].pk == companySelectObject.value){
+                        companyAddressComplete = js_json_company_all[i].fields.name + "\n"
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.address + "\n"
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.city + " "
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.state + " "
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.zip_code + " " 
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.tel  
+                    }
+                }
+                document.getElementById("company-select").style.opacity = "0";
+                document.getElementById("company-select").disabled="true";
+                document.getElementById("change-company-button").removeAttribute("disabled")
+                document.getElementById("change-company-button").style.opacity = "1";
+                document.getElementById("change-company-button").style.zIndex = "2";
+            }
+            document.getElementById("text-area-company-mailing-address").innerHTML = companyAddressComplete
         }
         function customer_selected(customerSelectObject){
-            var mailingAddressComplete = "";
-            if (customerSelectObject == "-1"){
-                    mailingAddressComplete = "                --Read only--";
+            var customerAddressComplete = "";
+            if (customerSelectObject.value == "-1" || customerSelectObject == "-1"){
+                    customerAddressComplete = "\n" + "                --Read only--";;
             }
             else {
                 for (i=0; i<js_json_customer_all.length; i++){
                     if (js_json_customer_all[i].pk == customerSelectObject.value){
-                        mailingAddressComplete = js_json_customer_all[i].fields.name + "\n"
-                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.address + "\n"
-                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.city + " "
-                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.state + " "
-                        mailingAddressComplete = mailingAddressComplete + js_json_customer_all[i].fields.zip_code  
+                        customerAddressComplete = js_json_customer_all[i].fields.name + "\n"
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.address + "\n"
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.city + " "
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.state + " "
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.zip_code  
                         customerSelectedPk=(js_json_customer_all[i].pk)
                     }
                 }
                 document.getElementById("customer-select").style.opacity = "0";
                 document.getElementById("customer-select").disabled = true;
-                document.getElementById("change-company-button").disabled = false;
-                document.getElementById("change-company-button").style.zIndex = "2";
-                document.getElementById("change-company-button").style.opacity = "1.0";
-                // document.getElementById("customer-select").style.display = "none"
-                // document.getElementById("text-area-customer-mailing-address").style.marginTop = "18px"
-                // document.getElementById("change-company-button").style.display = "block"
-                // document.getElementById("change-company-button").style.marginTop = "-20px"
-                // document.getElementById("change-company-button").style.marginLeft = "290px"
-                // document.getElementById("line-items-table").style.marginTop = "-1px"
+                document.getElementById("change-customer-button").removeAttribute("disabled");
+                document.getElementById("change-customer-button").style.opacity = "1.0";
+                document.getElementById("change-customer-button").style.zIndex = "2";
             }
-            document.getElementById("text-area-customer-mailing-address").innerHTML = mailingAddressComplete
+            document.getElementById("text-area-customer-mailing-address").innerHTML = customerAddressComplete
             for (i=1; i<=5; i++){
                 document.getElementById("po-num-input-" + i).value = ""
                 document.getElementById("item-num-select-" + i).value = "-1"
@@ -391,6 +439,8 @@
                 document.getElementById("qty-ea-input-" + i).value = ""
                 document.getElementById("price-ea-input-" + i).value = "--Read only--"
                 document.getElementById("amount-dollar-input-" + i).value = "--Read only--"
+                document.getElementById("item-num-select-" + i).style.background = "rgb(255,216,20)";
+                document.getElementById("item-name-select-" + i).style.background = "rgb(255,216,20)";
             }
             sum_amount()
         }
@@ -401,9 +451,11 @@
                 return
             }
             if (document.getElementById(itemNumSelectObject.name).value == "-1"){
+                document.getElementById(itemNumSelectObject.name).style.backgroundColor = "rgb(255,216,20)";
+                document.getElementById("item-name-select-" + rowSelected).style.backgroundColor = "rgb(255,216,20)";
+                // document.getElementById("price-ea-input-" + rowSelected).style.background = "white";
+                // document.getElementById("price-ea-input-" + i).style.color = "rgb(0, 0, 182)";
                 document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
                 document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
                 sum_amount()
             }
@@ -411,8 +463,10 @@
                 var match = "N"
                 for (i=0; i<js_json_customer_pricing_all.length; i++){
                     if ((js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk) && (js_json_customer_pricing_all[i].fields.item_id == itemNumSelectObject.value)) {
-                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
-                        document.getElementById("item-name-select-" + rowSelected).value = itemNumSelectObject.value
+                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing;
+                        document.getElementById("item-name-select-" + rowSelected).value = itemNumSelectObject.value;
+                        document.getElementById(itemNumSelectObject.name).style.background = "rgb(251,247,240)";
+                        document.getElementById("item-name-select-" + rowSelected).style.background = "rgb(251,247,240)";
                         match = "Y"
                         break;
                     }
@@ -434,6 +488,8 @@
                 return
             }
             if (document.getElementById(itemNameSelectObject.name).value == "-1"){
+                document.getElementById(itemNameSelectObject.name).style.backgroundColor = "rgb(255,216,20)";
+                document.getElementById("item-num-select-" + rowSelected).style.backgroundColor = "rgb(255,216,20)";
                 document.getElementById("item-num-select-" + rowSelected).value = "-1"
                 document.getElementById("qty-ea-input-" + rowSelected).value = ""
                 document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
@@ -446,6 +502,8 @@
                     if (js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk && js_json_customer_pricing_all[i].fields.item_id == itemNameSelectObject.value){
                         document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
                         document.getElementById("item-num-select-" + rowSelected).value = itemNameSelectObject.value
+                        document.getElementById(itemNameSelectObject.name).style.background = "rgb(251,247,240)";
+                        document.getElementById("item-num-select-" + rowSelected).style.backgroundColor = "rgb(251,247,240)";
                         match = "Y"
                         break;
                     }
