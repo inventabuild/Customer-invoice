@@ -67,23 +67,23 @@
         }
         function validate_form(){
             if(document.getElementById("customer-name-select").value == "-1"){
-                alert("Select a Customer")
-                event.preventDefault()
-                return
+                alert("Select a Customer");
+                event.preventDefault();
+                return;
             }
             else if(document.getElementById("item-name-select").value == "-1"){
-                alert("Select and Item")
-                event.preventDefault()
-                return
+                alert("Select and Item");
+                event.preventDefault();
+                return;
             }
             else if(document.getElementById("customer-pricing").value == "") {
-                alert("Enter customer pricing")
-                event.preventDefault()
-                return
+                alert("Enter customer pricing");
+                event.preventDefault();
+                return;
             }
             else{
                 let form = document.getElementById("customer-pricing-form");
-                form.submit()
+                form.submit();
             }
         }
     </script>

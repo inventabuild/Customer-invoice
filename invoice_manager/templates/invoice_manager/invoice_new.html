@@ -15,7 +15,6 @@
     </div>
     <h2 class="h2-header">Invoice Form</h2>
     <form action="{% url 'invoice_new' %}" id="invoice-form" method="POST">
-        <!-- onsubmit="validate_form()" -->
         {% csrf_token %}
         <div class="doc-type">
             INVOICE
@@ -267,88 +266,82 @@
         <div id="message-div">{{ message }}</div>
     </form>
     <script type="text/javascript">
-        var js_json_company_all = JSON.parse('{{ json_company_all | safe }}')
-        var js_json_customer_all = JSON.parse('{{ json_customer_all | safe }}')
-        var js_json_customer_pricing_all = JSON.parse('{{ json_customer_pricing_all | safe }}')
-        var js_json_item_all = JSON.parse('{{ json_item_all | safe }}')
-        var customerSelectedPk = "-1"
+        var js_json_company_all = JSON.parse('{{ json_company_all | safe }}');
+        var js_json_customer_all = JSON.parse('{{ json_customer_all | safe }}');
+        var js_json_customer_pricing_all = JSON.parse('{{ json_customer_pricing_all | safe }}');
+        var js_json_item_all = JSON.parse('{{ json_item_all | safe }}');
+        var customerSelectedPk = "-1";
         document.getElementById("text-area-company-mailing-address").innerHTML = "\n" + "--Read only--";
         document.getElementById("text-area-customer-mailing-address").innerHTML = "\n" + "                 --Read only--";
         function validate_form(){
             if(document.getElementById("invoice-num-input").value == ""){
-                alert("Enter the Invoice #")
-                event.preventDefault()
-                return
+                alert("Enter the Invoice #");
+                event.preventDefault();
+                return;
             }
             else if(document.getElementById("customer-select").value == "-1"){
-                alert("Select a company")
-                event.preventDefault()
-                return
+                alert("Select a company");
+                event.preventDefault();
+                return;
             }
             for(i=1; i<=5; i++){
                 if((document.getElementById("po-num-input-" + i).value != "" || document.getElementById("qty-ea-input-" + i).value != "") && document.getElementById("item-num-select-" + i).value == "-1"){
-                    alert("Enter the Item # or Item Name for row " + i + " or clear the row of data")
-                    event.preventDefault()
-                    return
+                    alert("Enter the Item # or Item Name for row " + i + " or clear the row of data");
+                    event.preventDefault();
+                    return;
                 }
             }
-            var ctr = 0
+            var ctr = 0;
             for(i=1; i<=5; i++){
                 if(document.getElementById("po-num-input-" + i).value == "" && document.getElementById("item-num-select-" + i).value == "-1" && document.getElementById("qty-ea-input-" + i).value == "--Read only"){
-                    ctr = ctr + 1
+                    ctr = ctr + 1;
                 }
             }
             if(ctr == 5){
                 alert("Fill out a row before saving the invoice")
-                event.preventDefault()
-                return
+                event.preventDefault();
+                return;
             }
             for(i=1; i<=5; i++){
-                if(document.getElementById("item-num-select-" + i).value != "-1"){
+                if(document.getElementById("item-num-select-" + i).value != "-1" && document.getElementById("item-num-select-" + i).value != "-2"){
                     if(document.getElementById("po-num-input-" + i).value == ""){
-                        alert("Enter the PO # for row " + i)
-                        event.preventDefault()
-                        return
+                        alert("E;nter the PO # for row " + i);
+                        event.preventDefault();
+                        return;
                     }
                     else if(document.getElementById("qty-ea-input-" + i).value == "--Read only--"){
-                        alert("Enter the Qty Ea for row " + i)
-                        event.preventDefault()
-                        return
+                        alert("Enter the Qty Ea for row " + i);
+                        event.preventDefault();
+                        return;
                     }
                 }
             }
             for(i=1; i<=5; i++){
                 if(document.getElementById("item-num-select-" + i).value == "-1"){
-                    document.getElementById("item-num-select-" + i).value = "-2"
+                    document.getElementById("item-num-select-" + i).value = "-2";
                 }
                 if(document.getElementById("item-name-select-" + i).value == "-1"){
-                    document.getElementById("item-name-select-" + i).value = "-2"
+                    document.getElementById("item-name-select-" + i).value = "-2";
                 }
                 if(document.getElementById("price-ea-input-" + i).value == "--Read only--"){
-                    document.getElementById("price-ea-input-" + i).value = ""
-                    document.getElementById("dollar-sign-price-ea-" + i).innerHTML = ""
+                    document.getElementById("price-ea-input-" + i).value = "";
+                    document.getElementById("dollar-sign-price-ea-" + i).innerHTML = "";
                 }
                 if(document.getElementById("amount-dollar-input-" + i).value == "--Read only--"){
-                    document.getElementById("amount-dollar-input-" + i).value = ""
-                    document.getElementById("dollar-sign-amount-dollar-input-" + i).innerHTML = ""
+                    document.getElementById("amount-dollar-input-" + i).value = "";
+                    document.getElementById("dollar-sign-amount-dollar-input-" + i).innerHTML = "";
                 }
                 document.getElementById("dollar-sign-price-ea-" + i).style.color = "black";
                 document.getElementById("dollar-sign-amount-dollar-input-" + i).style.color = "black";
                 document.getElementById("price-ea-input-" + i).style.color = "black";
                 document.getElementById("amount-dollar-input-" + i).style.color = "black";
             }
-            // document.getElementById("dollar-sign-sales-amount-input").style.color = "black";
-            // document.getElementById("dollar-sign-total-due-input").style.color = "black";
-            // document.getElementById("sales-amount-input").style.color = "black";
-            // document.getElementById("total-due-input").style.color = "black";
-            // document.getElementById("text-area-company-mailing-address").style.color = "black";
             if (document.getElementById("freight-amount-input").value == ""){
                 alert("Enter the Freight Amount");
-                event.preventDefault()
-                // document.getElementById("freight-amount-input").value = "0.00"
-                return
+                event.preventDefault();
+                return;
             }
-            print()
+            print();
             document.getElementById("change-customer-button").disabled;
             document.getElementById("customer-select").disabled = false;
             let form = document.getElementById("invoice-form");
@@ -357,10 +350,10 @@
             // alert(document.getElementById("message-div").innerHTML)
         }
         function text_area_customer_mailing_address(){
-            alert("Address area is read only")
+            alert("Address area is read only");
         }
         function text_area_company_mailing_address(){
-            alert("Address area is read only")
+            alert("Address area is read only");
         }
         const changeCustomerButton = document.getElementById("change-customer-button");
         changeCustomerButton.addEventListener("click", showSelectCustomer);
@@ -371,7 +364,7 @@
             document.getElementById("change-customer-button").style.zIndex = "0";
             document.getElementById("change-customer-button").style.opacity = "0";
             document.getElementById("change-customer-button").disabled;
-            customer_selected("-1")
+            customer_selected("-1");
         }
         const changeCompanyButton = document.getElementById("change-company-button");
         changeCompanyButton.addEventListener("click", showSelectCompany);
@@ -392,36 +385,36 @@
             else {
                 for (i=0; i<js_json_company_all.length; i++){
                     if (js_json_company_all[i].pk == companySelectObject.value){
-                        companyAddressComplete = js_json_company_all[i].fields.name + "\n"
-                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.address + "\n"
-                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.city + " "
-                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.state + " "
-                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.zip_code + " " 
-                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.tel  
+                        companyAddressComplete = js_json_company_all[i].fields.name + "\n";
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.address + "\n";
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.city + " ";
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.state + " ";
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.zip_code + " ";
+                        companyAddressComplete = companyAddressComplete + js_json_company_all[i].fields.tel;  
                     }
                 }
                 document.getElementById("company-select").style.opacity = "0";
                 document.getElementById("company-select").disabled="true";
-                document.getElementById("change-company-button").removeAttribute("disabled")
+                document.getElementById("change-company-button").removeAttribute("disabled");
                 document.getElementById("change-company-button").style.opacity = "1";
                 document.getElementById("change-company-button").style.zIndex = "2";
             }
-            document.getElementById("text-area-company-mailing-address").innerHTML = companyAddressComplete
+            document.getElementById("text-area-company-mailing-address").innerHTML = companyAddressComplete;
         }
         function customer_selected(customerSelectObject){
             var customerAddressComplete = "";
             if (customerSelectObject.value == "-1" || customerSelectObject == "-1"){
-                    customerAddressComplete = "\n" + "                --Read only--";;
+                    customerAddressComplete = "\n" + "                --Read only--";
             }
             else {
                 for (i=0; i<js_json_customer_all.length; i++){
                     if (js_json_customer_all[i].pk == customerSelectObject.value){
-                        customerAddressComplete = js_json_customer_all[i].fields.name + "\n"
-                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.address + "\n"
-                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.city + " "
-                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.state + " "
-                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.zip_code  
-                        customerSelectedPk=(js_json_customer_all[i].pk)
+                        customerAddressComplete = js_json_customer_all[i].fields.name + "\n";
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.address + "\n";
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.city + " ";
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.state + " ";
+                        customerAddressComplete = customerAddressComplete + js_json_customer_all[i].fields.zip_code;  
+                        customerSelectedPk=(js_json_customer_all[i].pk);
                     }
                 }
                 document.getElementById("customer-select").style.opacity = "0";
@@ -430,90 +423,88 @@
                 document.getElementById("change-customer-button").style.opacity = "1.0";
                 document.getElementById("change-customer-button").style.zIndex = "2";
             }
-            document.getElementById("text-area-customer-mailing-address").innerHTML = customerAddressComplete
+            document.getElementById("text-area-customer-mailing-address").innerHTML = customerAddressComplete;
             for (i=1; i<=5; i++){
-                document.getElementById("po-num-input-" + i).value = ""
-                document.getElementById("item-num-select-" + i).value = "-1"
-                document.getElementById("item-name-select-" + i).value = "-1"
-                document.getElementById("qty-ea-input-" + i).value = ""
-                document.getElementById("price-ea-input-" + i).value = "--Read only--"
-                document.getElementById("amount-dollar-input-" + i).value = "--Read only--"
+                document.getElementById("po-num-input-" + i).value = "";
+                document.getElementById("item-num-select-" + i).value = "-1";
+                document.getElementById("item-name-select-" + i).value = "-1";
+                document.getElementById("qty-ea-input-" + i).value = "";
+                document.getElementById("price-ea-input-" + i).value = "--Read only--";
+                document.getElementById("amount-dollar-input-" + i).value = "--Read only--";
                 document.getElementById("item-num-select-" + i).style.background = "rgb(255,216,20)";
                 document.getElementById("item-name-select-" + i).style.background = "rgb(255,216,20)";
             }
-            sum_amount()
+            sum_amount();
         }
         function item_num_selected(itemNumSelectObject, rowSelected){
             if (document.getElementById("customer-select").value == "-1"){
-                itemNumSelectObject.value = "-1"
-                alert("Select the company first")
-                return
+                itemNumSelectObject.value = "-1";
+                alert("Select the company first");
+                return;
             }
             if (document.getElementById(itemNumSelectObject.name).value == "-1"){
                 document.getElementById(itemNumSelectObject.name).style.backgroundColor = "rgb(255,216,20)";
                 document.getElementById("item-name-select-" + rowSelected).style.backgroundColor = "rgb(255,216,20)";
-                // document.getElementById("price-ea-input-" + rowSelected).style.background = "white";
-                // document.getElementById("price-ea-input-" + i).style.color = "rgb(0, 0, 182)";
-                document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                sum_amount()
+                document.getElementById("item-name-select-" + rowSelected).value = "-1";
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--";
+                sum_amount();
             }
             else{
-                var match = "N"
+                var match = "N";
                 for (i=0; i<js_json_customer_pricing_all.length; i++){
-                    if ((js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk) && (js_json_customer_pricing_all[i].fields.item_id == itemNumSelectObject.value)) {
+                    if ((js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk) && (js_json_customer_pricing_all[i].fields.item_id == itemNumSelectObject.value)){
                         document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing;
                         document.getElementById("item-name-select-" + rowSelected).value = itemNumSelectObject.value;
                         document.getElementById(itemNumSelectObject.name).style.background = "rgb(251,247,240)";
                         document.getElementById("item-name-select-" + rowSelected).style.background = "rgb(251,247,240)";
-                        match = "Y"
+                        match = "Y";
                         break;
                     }
                 }
                 if(match == "N"){
-                    document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                    document.getElementById("item-num-select-" + rowSelected).value = "-1"
-                    document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
-                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                    alert("Please create customer pricing for this item")
+                    document.getElementById("item-name-select-" + rowSelected).value = "-1";
+                    document.getElementById("item-num-select-" + rowSelected).value = "-1";
+                    document.getElementById("qty-ea-input-" + rowSelected).value = "";
+                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--";
+                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--";
+                    alert("Please create customer pricing for this item");
                 }
             }
         }
         function item_name_selected(itemNameSelectObject, rowSelected){
             if (document.getElementById("customer-select").value == "-1"){
-                itemNameSelectObject.value = "-1"
-                alert("Select the company first")
-                return
+                itemNameSelectObject.value = "-1";
+                alert("Select the company first");
+                return;
             }
             if (document.getElementById(itemNameSelectObject.name).value == "-1"){
                 document.getElementById(itemNameSelectObject.name).style.backgroundColor = "rgb(255,216,20)";
                 document.getElementById("item-num-select-" + rowSelected).style.backgroundColor = "rgb(255,216,20)";
-                document.getElementById("item-num-select-" + rowSelected).value = "-1"
-                document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
-                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                sum_amount()
+                document.getElementById("item-num-select-" + rowSelected).value = "-1";
+                document.getElementById("qty-ea-input-" + rowSelected).value = "";
+                document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--";
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--";
+                sum_amount();
             }
             else{
-                var match = "N"
+                var match = "N";
                 for (i=0; i<js_json_customer_pricing_all.length; i++){
                     if (js_json_customer_pricing_all[i].fields.customer_id == customerSelectedPk && js_json_customer_pricing_all[i].fields.item_id == itemNameSelectObject.value){
-                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing
-                        document.getElementById("item-num-select-" + rowSelected).value = itemNameSelectObject.value
+                        document.getElementById("price-ea-input-" + rowSelected).value = js_json_customer_pricing_all[i].fields.customer_pricing;
+                        document.getElementById("item-num-select-" + rowSelected).value = itemNameSelectObject.value;
                         document.getElementById(itemNameSelectObject.name).style.background = "rgb(251,247,240)";
                         document.getElementById("item-num-select-" + rowSelected).style.backgroundColor = "rgb(251,247,240)";
-                        match = "Y"
+                        match = "Y";
                         break;
                     }
                 }
                 if(match == "N"){
-                    document.getElementById("item-name-select-" + rowSelected).value = "-1"
-                    document.getElementById("item-num-select-" + rowSelected).value = "-1"
-                    document.getElementById("qty-ea-input-" + rowSelected).value = ""
-                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--"
-                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--"
-                    alert("Please create customer pricing for this item")
+                    document.getElementById("item-name-select-" + rowSelected).value = "-1";
+                    document.getElementById("item-num-select-" + rowSelected).value = "-1";
+                    document.getElementById("qty-ea-input-" + rowSelected).value = "";
+                    document.getElementById("price-ea-input-" + rowSelected).value = "--Read only--";
+                    document.getElementById("amount-dollar-input-" + rowSelected).value = "--Read only--";
+                    alert("Please create customer pricing for this item");
                 }
             }
         }
@@ -526,74 +517,74 @@
         var today = year + "-" + month + "-" + day;       
         document.getElementById("invoice-date-input").value = today;
         function sum_amount(){
-            totSalesAmount = Number(0.00).toFixed(2)
+            totSalesAmount = Number(0.00).toFixed(2);
             for(i = 1; i<=5; i++){
                 if (!isNaN(Number(document.getElementById("amount-dollar-input-" + i).value))){
-                totSalesAmount = Number(totSalesAmount) + Number(document.getElementById("amount-dollar-input-" + i).value)
+                totSalesAmount = Number(totSalesAmount) + Number(document.getElementById("amount-dollar-input-" + i).value);
             }
             }
-            document.getElementById("sales-amount-input").value = Number(totSalesAmount).toFixed(2)
+            document.getElementById("sales-amount-input").value = Number(totSalesAmount).toFixed(2);
             if(document.getElementById("sales-amount-input").value == "0.00"){
-                document.getElementById("sales-amount-input").value = "--Read only--"
+                document.getElementById("sales-amount-input").value = "--Read only--";
             }
-            total_due()
+            total_due();
         }
         function qty_ea_validation(amountQtyEaInput, rowSelected){
             if (document.getElementById("price-ea-input-" + rowSelected).value == "--Read only--") {
-                amountQtyEaInput.value = ""
-                alert("Select an Item # or Item Name before entering Qty Ea")
+                amountQtyEaInput.value = "";
+                alert("Select an Item # or Item Name before entering Qty Ea");
             }
             else if(amountQtyEaInput.value - Math.floor(amountQtyEaInput.value) !== 0){
-                amountQtyEaInput.value = ""
-                alert("Only whole numbers allowed in Qty Ea field")    
+                amountQtyEaInput.value = "";
+                alert("Only whole numbers allowed in Qty Ea field");    
             }
             else if(amountQtyEaInput.value == 0){
-                amountQtyEaInput.value = ""
-                document.getElementById("amount-dollar-input-" + rowSelected).value = "Read only"
-                sum_amount()
+                amountQtyEaInput.value = "";
+                document.getElementById("amount-dollar-input-" + rowSelected).value = "Read only";
+                sum_amount();
             }
             else{
-                amountQtyEaInput.value = Number(amountQtyEaInput.value).toFixed(0)
-                document.getElementById("amount-dollar-input-" + rowSelected).value = Number(amountQtyEaInput.value * document.getElementById("price-ea-input-" + rowSelected).value).toFixed(2)
-                sum_amount()
+                amountQtyEaInput.value = Number(amountQtyEaInput.value).toFixed(0);
+                document.getElementById("amount-dollar-input-" + rowSelected).value = Number(amountQtyEaInput.value * document.getElementById("price-ea-input-" + rowSelected).value).toFixed(2);
+                sum_amount();
             }
         }
         function price_ea_field_clicked(rowSelected){
             if (document.getElementById("item-num-select-" + rowSelected).value == ""){
-                alert("Select an Item # or Item Name to get pricing.")
+                alert("Select an Item # or Item Name to get pricing.");
             }
             else{
-                alert("This field is readonly")
+                alert("This field is readonly");
             }
         }
         function sales_amount_field_clicked(){
-            alert("This field is readonly")
+            alert("This field is readonly");
         }
         function total_due_field_clicked(){
-            alert("This field is readonly")
+            alert("This field is readonly");
         }
         function amount_dollar_field_clicked(){
-            alert("This field is readonly")
+            alert("This field is readonly");
         }
         function freight_amount(){
             if (!isNaN(Number(document.getElementById("freight-amount-input").value))){
-                document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2)
+                document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2);
             }
-            total_due()
+            total_due();
         }
         function total_due(){
-            var totalDue = 0.00
+            var totalDue = 0.00;
             if (!isNaN(Number(document.getElementById("sales-amount-input").value))){
-                totalDue = Number(document.getElementById("sales-amount-input").value)
-                document.getElementById("total-due-input").value = Number(totalDue).toFixed(2)
+                totalDue = Number(document.getElementById("sales-amount-input").value);
+                document.getElementById("total-due-input").value = Number(totalDue).toFixed(2);
             }
             else{
-                document.getElementById("total-due-input").value = "--Read only--"
+                document.getElementById("total-due-input").value = "--Read only--";
             }
             if (!isNaN(Number(document.getElementById("freight-amount-input").value)) && Number(document.getElementById("freight-amount-input").value)!==0){
-                    document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2)
-                    totalDue = totalDue + Number(document.getElementById("freight-amount-input").value)
-                    document.getElementById("total-due-input").value = totalDue.toFixed(2)
+                    document.getElementById("freight-amount-input").value = Number(document.getElementById("freight-amount-input").value).toFixed(2);
+                    totalDue = totalDue + Number(document.getElementById("freight-amount-input").value);
+                    document.getElementById("total-due-input").value = totalDue.toFixed(2);
             }
         }
     </script>
