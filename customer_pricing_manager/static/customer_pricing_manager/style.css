@@ -22,3 +22,8 @@ td, th{
 .hyperlink-menu-item{
     margin-right: 10px;
 }
+.create-customer-pricing-button{
+    background-color: #FFA41C;
+    border-width: 1px;
+    border-radius: 16px;
+}

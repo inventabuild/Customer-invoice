@@ -57,7 +57,7 @@
     resize: none;
     position: relative;
     top: 27.5px;
-    left: 493px;
+    left: 167px;
     /* color: rgb(0, 0, 182); */
     text-align: center;
     color: black;
@@ -99,8 +99,8 @@
 .company-select{
     z-index: 1;
     position: relative;
-    left: 60px;
-    top: -87px;
+    left: -64px;
+    top: -73px;
     bottom: 48px;
     opacity: 1;
     background-color: rgb(255,216,20);
@@ -111,8 +111,8 @@
 }
 .change-company-button{
     position: relative;
-    top: -88px;
-    left: -101px;
+    top: -73px;
+    left: -227px;
     /* background-color: rgb(255, 196, 86); */
     background-color: rgb(235, 199, 20);
     opacity: 0;
@@ -529,7 +529,7 @@ input:-webkit-autofill:active{
     }
     .text-area-company-mailing-address{
         position: relative;
-        left: 338px;
+        left: 0px;
         color: black;
         border: none;
     }

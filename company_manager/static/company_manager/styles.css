@@ -16,3 +16,8 @@ input{
 .hyperlink-menu-item{
     margin-right: 10px;
 }
+.create-company-button{
+    background-color: #FFA41C;
+    border-width: 1px;
+    border-radius: 16px;
+}
