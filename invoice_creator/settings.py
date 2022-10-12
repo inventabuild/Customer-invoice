@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import django_heroku
+import django_on_heroku
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'invoice_creator.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': BASE_DIR / 'db.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -135,4 +135,4 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
