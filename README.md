@@ -28,6 +28,8 @@ The website uses Django,Python, html, css and Javascript.
 13. Find best way to convert new invoice to pdf file when the page is saved.
 14. Make several @media only screen to change formatting of elements as screen size changes.
 15. Create a homepage w/ a nice background picture showing some of the things that can be done w/ the app.  Possibly make the links to the apps horizontal w/ a bootstrap navbar instead the current vertical listing.
+16. Validate names for no commas so django doesn't throw an error.
+17. Validate css.
 
 ## User Stories
 User Story 1, As someone that creates invoices on the computer, I want to simplify the invoice creation process, so that I can automate invoicing.
