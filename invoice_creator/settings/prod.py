@@ -4,12 +4,12 @@ from decouple import invoice_creator
 
 from .base import *
 
-SECRET_KEY = invoice_creater('SECRET_KEY')
+SECRET_KEY = invoice_creator('SECRET_KEY')
 
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'django-invoice-creator.herokuapp.com',
+    'django-invoice-creator-herokuapp.com',
 	'business-invoice-creator.com'
 ]
 
