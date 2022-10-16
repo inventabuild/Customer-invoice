@@ -10,7 +10,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     'django-invoice-creator-herokuapp.com',
-	'business-invoice-creator.com'
+	'business-invoice-creator.com',
 ]
 
 DEBUG_PROPAGATE_EXCEPTIONS = True
