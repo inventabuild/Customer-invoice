@@ -1,10 +1,12 @@
+from distutils.command.config import config
 from development.invoice_creator.invoice_creator.settings.dev import ALLOWED_HOSTS, SECRET_KEY
 import django_on_heroku
 from decouple import invoice_creator
 
 from .base import *
 
-SECRET_KEY = invoice_creator('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
