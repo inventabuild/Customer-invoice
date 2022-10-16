@@ -5,8 +5,8 @@ from decouple import invoice_creator
 
 from .base import *
 
+#SECRET_KEY = invoice_creator('SECRET_KEY')
 SECRET_KEY = config('SECRET_KEY')
-#SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
