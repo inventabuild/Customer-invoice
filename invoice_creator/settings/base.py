@@ -72,9 +72,7 @@ WSGI_APPLICATION = 'invoice_creator.wsgi.application'
 
 load_dotenv(find_dotenv())
 
-#DATABASES = {'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600, ssl_require=False)}
-DATABASES = {'default': dj_database_url.invoice_creator(default='sqlite:///db.sqlite3', conn_max_age=600, ssl_require=False)}
-
+DATABASES = {'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600, ssl_require=False)}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
