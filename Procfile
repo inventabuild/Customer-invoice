@@ -1,1 +1,1 @@
-web: gunicorn invoice_creator.wsgi
+web: python manage.py migrate && gunicorn invoice_creator.wsgi
